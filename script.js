@@ -32,12 +32,11 @@ function colorGradient(initialcolor,finalcolor,index){
     for(let i=0;i<3;i++){
         if(initialcolor[i]){
             initialcolor[i]*=1-(index/64)
-            finalcolor[i]*=index/64
-            initialcolor[i]+=finalcolor[i]
-            if(initialcolor[i]>255){
-                initialcolor=255
-            }
         }
+        if(finalcolor[i]){
+            finalcolor[i]*=index/64
+        }
+        initialcolor[i]+=finalcolor[i]
     }
     let currentcolor = `rgb(${initialcolor[0]},${initialcolor[1]},${initialcolor[2]})`
     return currentcolor
@@ -86,19 +85,19 @@ for(let i=0;i<8;i++){
     for(let j=0;j<8;j++){
         if(i%2===0&&j%2===0){
             let k = (i*8)+j
-            let gradientColor = colorGradient([255,255,255],[255,0,0],k)
+            let gradientColor = colorGradient([255,0,0],[255,255,255],k)
             makeSquare(gradientboard,gradientColor)
             //red
         }
         else if(i%2===1&&j%2===1){
             let k = (i*8)+j
-            let gradientColor = colorGradient([255,255,255],[255,0,0],k)
+            let gradientColor = colorGradient([255,0,0],[255,255,255],k)
             makeSquare(gradientboard,gradientColor)
             //red
         }
         else{
             let k = (i*8)+j
-            let gradientColor = colorGradient([0,0,255],[0,0,0],k)
+            let gradientColor = colorGradient([0,0,0],[0,0,255],k)
             makeSquare(gradientboard,gradientColor)
             //black
         }
@@ -110,4 +109,4 @@ const flashingboard = makeContainer()
 for(let i=0;i<64;i++){
     makeSquare(flashingboard,"#",randomcolor)
 }
-window.setInterval(changeColor,2000)
+window.setInterval(changeColor,100)
