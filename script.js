@@ -7,18 +7,6 @@
 
 // * `width = "12.5%"`
 // * `height = "12.5%"`
-
-
-let body = document.getElementsByTagName("body")[0]
-
-function makeSquare(container,color){
-    const square = document.createElement('div')
-    square.style.width = "12.5%"
-    square.style.height = "12.5%"
-    square.style.backgroundColor = color
-    container.appendChild(square)
-}
-
 function makeContainer(){
     const container = document.createElement('div')
     container.style.display = "flex"
@@ -30,8 +18,45 @@ function makeContainer(){
     body.appendChild(container)
     return(container);
 }
+function makeSquare(container,color){
+    const square = document.createElement('div')
+    square.style.width = "12.5%"
+    square.style.height = "12.5%"
+    square.style.backgroundColor = color
+    container.appendChild(square)
+}
+function randomcolor(){
+    return Math.floor(Math.random()*16777215).toString(16)
+}
+function colorGradient(initialcolor,finalcolor,index){
+    for(let i=0;i<3;i++){
+        if(initialcolor[i]){
+            initialcolor[i]*=1-(index/64)
+            finalcolor[i]*=index/64
+            initialcolor[i]+=finalcolor[i]
+            if(initialcolor[i]>255){
+                initialcolor=255
+            }
+        }
+    }
+    let currentcolor = `rgb(${initialcolor[0]},${initialcolor[1]},${initialcolor[2]})`
+    return currentcolor
+}
+function changeColor(){
+    var squares = flashingboard.getElementsByTagName('div')
+    for(let i=0;i<64;i++)
+    {
+        squares[i].style.backgroundColor = "#"+randomcolor()
+    }
+}
 
-const chessboard = makeContainer()
+
+
+
+//tests
+//checkerboard
+let body = document.getElementsByTagName("body")[0]
+const chessboard = makeContainer() 
 for(let i=0;i<8;i++){
     for(let j=0;j<8;j++){
         if(i%2===0&&j%2===0){
@@ -48,3 +73,41 @@ for(let i=0;i<8;i++){
         }
     }
 }
+
+//random color board
+const colorboard = makeContainer() 
+for(let i=0;i<64;i++){
+    makeSquare(colorboard,"#"+randomcolor())
+}
+
+//gradient color board
+const gradientboard = makeContainer() 
+for(let i=0;i<8;i++){
+    for(let j=0;j<8;j++){
+        if(i%2===0&&j%2===0){
+            let k = (i*8)+j
+            let gradientColor = colorGradient([255,255,255],[255,0,0],k)
+            makeSquare(gradientboard,gradientColor)
+            //red
+        }
+        else if(i%2===1&&j%2===1){
+            let k = (i*8)+j
+            let gradientColor = colorGradient([255,255,255],[255,0,0],k)
+            makeSquare(gradientboard,gradientColor)
+            //red
+        }
+        else{
+            let k = (i*8)+j
+            let gradientColor = colorGradient([0,0,255],[0,0,0],k)
+            makeSquare(gradientboard,gradientColor)
+            //black
+        }
+    }
+}
+
+//flashing color board
+const flashingboard = makeContainer()
+for(let i=0;i<64;i++){
+    makeSquare(flashingboard,"#",randomcolor)
+}
+window.setInterval(changeColor,2000)
