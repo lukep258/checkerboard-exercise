@@ -106,7 +106,13 @@ for(let i=0;i<8;i++){
 
 //flashing color board
 const flashingboard = makeContainer()
+
+let audiofile = document.createElement('audio')
+audiofile.setAttribute('id','audio')
+audiofile.setAttribute('src','C:\Users\yeons\Downloads\bell-ringing-05.wav')
+
 for(let i=0;i<64;i++){
     makeSquare(flashingboard,"#",randomcolor)
 }
 window.setInterval(changeColor,100)
+window.setInterval(audiofile.play,100)
