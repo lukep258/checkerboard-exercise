@@ -85,19 +85,19 @@ for(let i=0;i<8;i++){
     for(let j=0;j<8;j++){
         if(i%2===0&&j%2===0){
             let k = (i*8)+j
-            let gradientColor = colorGradient([255,0,0],[255,255,255],k)
+            let gradientColor = colorGradient([255,255,0],[255,0,0],k)
             makeSquare(gradientboard,gradientColor)
             //red
         }
         else if(i%2===1&&j%2===1){
             let k = (i*8)+j
-            let gradientColor = colorGradient([255,0,0],[255,255,255],k)
+            let gradientColor = colorGradient([255,255,0],[255,0,0],k)
             makeSquare(gradientboard,gradientColor)
             //red
         }
         else{
             let k = (i*8)+j
-            let gradientColor = colorGradient([0,0,0],[0,0,255],k)
+            let gradientColor = colorGradient([0,255,0],[0,0,255],k)
             makeSquare(gradientboard,gradientColor)
             //black
         }
